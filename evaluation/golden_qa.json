@@ -1,0 +1,76 @@
+[
+    {
+        "question": "What is Article 21?",
+        "ground_truth": "Article 21 guarantees protection of life and personal liberty."
+    },
+
+    {
+        "question": "Summarize agriculture in india",
+        "ground_truth": "Indian agriculture supports a large population and faces challenges related to soil, irrigation, and productivity."
+    },
+
+    {
+        "question": "What are cyber attacks?",
+        "ground_truth": "Cyber attacks are malicious attempts to damage, disrupt, or gain unauthorized access to systems."
+    },
+
+    {
+        "question": "2 + 5 * 10",
+        "ground_truth": "52"
+    },
+
+    {
+        "question": "Who won FIFA 2022?",
+        "ground_truth": "Argentina won FIFA World Cup 2022."
+    },
+
+    {
+        "question": "What is the importance of Indian agriculture?",
+        "ground_truth": "Indian agriculture is important for food security, employment, and economic growth."
+    },
+
+    {
+        "question": "Summarize landmark judgments",
+        "ground_truth": "The document discusses important Supreme Court judgments and their legal significance."
+    },
+
+    {
+        "question": "What is personal liberty?",
+        "ground_truth": "Personal liberty refers to individual freedom protected under Article 21."
+    },
+
+    {
+        "question": "10 / 2 + 6",
+        "ground_truth": "11"
+    },
+
+    {
+        "question": "Explain cyber security threats",
+        "ground_truth": "Cyber security threats include malware, phishing, ransomware, and hacking attacks."
+    },
+
+    {
+        "question": "What is the role of irrigation in agriculture?",
+        "ground_truth": "Irrigation improves agricultural productivity and water management."
+    },
+
+    {
+        "question": "Summarize cyber attacks in India",
+        "ground_truth": "The document explains different cyber attacks and their impact in India."
+    },
+
+    {
+        "question": "Who is the president of India?",
+        "ground_truth": "Droupadi Murmu is the President of India."
+    },
+
+    {
+        "question": "What does Article 21 protect?",
+        "ground_truth": "Article 21 protects life and personal liberty."
+    },
+
+    {
+        "question": "summarize cryptocurrency pdf",
+        "ground_truth": "The system should abstain due to missing document."
+    }
+]
