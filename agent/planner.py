@@ -1,89 +1,73 @@
-import json
+def create_plan(user_query, memory=None):
 
-import ollama
-
-from tools.registry import TOOLS
-
-
-def create_plan(user_query):
+    query = user_query.lower()
 
     # -----------------------------
-    # BUILD TOOL DESCRIPTIONS
+    # MEMORY-AWARE FOLLOW UP
     # -----------------------------
-    tool_descriptions = ""
+    if memory and len(query.split()) <= 5:
 
-    for tool in TOOLS:
+        last_memory = " ".join(memory[-2:])
 
-        tool_descriptions += (
-            f"Tool Name: {tool['name']}\n"
-            f"Description: "
-            f"{tool['description']}\n\n"
+        enhanced_query = (
+            f"{last_memory} {user_query}"
         )
 
-    # -----------------------------
-    # PLANNER PROMPT
-    # -----------------------------
-    planner_prompt = f"""
-You are an AI planning agent.
+    else:
 
-Your job is to create a short ordered plan
-for solving the user's question.
-
-You have access to these tools:
-
-{tool_descriptions}
-
-Rules:
-1. Choose the most relevant tools.
-2. Return ONLY valid JSON.
-3. Each step must contain:
-   - step
-   - tool
-   - task
-4. Do not explain anything.
-5. Keep plan short and clear.
-
-User Question:
-{user_query}
-"""
+        enhanced_query = user_query
 
     # -----------------------------
-    # CALL LLM PLANNER
+    # SUMMARIZATION
     # -----------------------------
-    response = ollama.chat(
-        model="llama3",
-        messages=[
-            {
-                "role": "user",
-                "content": planner_prompt
-            }
-        ],
-        options={
-            "temperature": 0
-        }
-    )
-
-    plan_text = (
-        response["message"]["content"]
-        .strip()
-    )
-
-    # -----------------------------
-    # PARSE JSON OUTPUT
-    # -----------------------------
-    try:
-
-        plan = json.loads(plan_text)
-
-        return plan
-
-    except Exception:
+    if "summarize" in query:
 
         return [
             {
                 "step": 1,
-                "tool": "rag_search",
-                "task":
-                "Fallback retrieval from PDFs"
+                "tool": "summarize_document",
+                "task": enhanced_query
             }
         ]
+
+    # -----------------------------
+    # CALCULATOR
+    # -----------------------------
+    math_symbols = [
+        "+",
+        "*",
+        "/"
+    ]
+
+    if (
+        any(
+            symbol in user_query
+            for symbol in math_symbols
+        )
+
+        and
+
+        any(
+            char.isdigit()
+            for char in user_query
+        )
+    ):
+
+        return [
+            {
+                "step": 1,
+                "tool": "calculator",
+                "task": enhanced_query
+            }
+        ]
+
+    # -----------------------------
+    # DEFAULT -> RAG FIRST
+    # -----------------------------
+    return [
+        {
+            "step": 1,
+            "tool": "rag_search",
+            "task": enhanced_query
+        }
+    ]
