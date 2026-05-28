@@ -70,7 +70,7 @@
     },
 
     {
-        "question": "summarize cryptocurrency pdf",
+        "question": "summarize indian cricketers pdf",
         "ground_truth": "The system should abstain due to missing document."
     }
 ]

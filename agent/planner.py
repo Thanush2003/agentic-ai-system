@@ -5,7 +5,36 @@ def create_plan(user_query, memory=None):
     # -----------------------------
     # MEMORY-AWARE FOLLOW UP
     # -----------------------------
-    if memory and len(query.split()) <= 5:
+
+    math_symbols = [
+        "+",
+        "-",
+        "*",
+        "/"
+    ]
+
+    is_math_query = (
+
+        any(
+            symbol in user_query
+            for symbol in math_symbols
+        )
+
+        and
+
+        any(
+            char.isdigit()
+            for char in user_query
+        )
+    )
+
+    # DO NOT ADD MEMORY TO CALCULATIONS
+    if is_math_query:
+
+        enhanced_query = user_query
+
+    # SHORT FOLLOW-UP QUESTIONS
+    elif memory and len(query.split()) <= 5:
 
         last_memory = " ".join(memory[-2:])
 
